@@ -147,7 +147,11 @@ module.exports = function (app, addon) {
   app.post('/webhook',
     addon.authenticate(),
     function (req, res) {
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'pong')
+
+      // var messageTxt = req.body.item.message.message;
+      // save to redis store
+
+      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note added (thumbsup)')
         .then(function (data) {
           res.sendStatus(200);
         });

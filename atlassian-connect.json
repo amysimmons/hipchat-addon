@@ -27,13 +27,15 @@
     "configurable": {
       "url": "{{localBaseUrl}}/config"
     },
-    "webhook": {
-      "url": "{{localBaseUrl}}/webhook",
-      "pattern": "^/hello",
-      "event": "room_message",
-      "name": "Hello!",
-      "authentication": "jwt"
-    },
+    "webhook": [
+      {
+        "url": "{{localBaseUrl}}/webhook",
+        "pattern": "^/retro",
+        "event": "room_message",
+        "name": "Retro",
+        "authentication": "jwt"
+      }
+    ],
     "glance": [
       {
         "name": {
