@@ -65,15 +65,15 @@
         // and well suited for storing Connect client information. This requires the
         // `atlassian-connect-express-redis` module.
         //
-        // "store": {
-        //   "adapter": "redis",
-        //   "url": "redis://localhost:6379"
-        // },
         "store": {
-            "adapter": "jugglingdb",
-            "type": "sqlite3",
-            "database": "store.db"
+          "adapter": "redis",
+          "url": "redis://localhost:6379"
         }
+        // "store": {
+        //     "adapter": "jugglingdb",
+        //     "type": "sqlite3",
+        //     "database": "store.db"
+        // }
     },
     // This is the production add-on configuration, which is enabled by setting
     // the NODE_ENV=production environment variable.

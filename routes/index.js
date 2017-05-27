@@ -147,9 +147,13 @@ module.exports = function (app, addon) {
   app.post('/webhook',
     addon.authenticate(),
     function (req, res) {
+      var clientKey = req.clientInfo.clientKey;
+      var roomId = req.context.room_id;
+      var messageId = req.body.item.message.id;
+      var messageText = req.body.item.message.message;
+      var key = roomId + '_' + messageId;
 
-      // var messageTxt = req.body.item.message.message;
-      // save to redis store
+      addon.settings.set(key, messageText, clientKey);
 
       hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note added (thumbsup)')
         .then(function (data) {
