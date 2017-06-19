@@ -61,7 +61,7 @@ module.exports = function (app, addon) {
       res.json({
         "label": {
           "type": "html",
-          "value": "Hello World!"
+          "value": "Retro Notes"
         },
         "status": {
           "type": "lozenge",
