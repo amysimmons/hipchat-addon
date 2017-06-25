@@ -6,79 +6,27 @@
 <section class="aui-connect-page" role="main">
    <section class="aui-connect-content with-list">
       <ol class="aui-connect-list">
-         <li class="aui-connect-list-item">
-            <span class="aui-avatar aui-avatar-xsmall">
-               <span class="aui-avatar-inner">
-                  <img style="background-color: #ccc;">
-               </span>
-            </span>
-            <span class="aui-connect-list-item-title">Primary text</span>
-            <ul class="aui-connect-list-item-attributes">
-               <li>Secondary text</li>
-               <li>2016-10-20 02:30 PM</li>
-            </ul>
-            <div class="aui-connect-list-item-description">
-               List view descriptions are optional.
-            </div>
-         </li>
-         <li class="aui-connect-list-item">
-            <span class="aui-avatar aui-avatar-xsmall">
-               <span class="aui-avatar-inner">
-                  <img style="background-color: #ccc;">
-               </span>
-            </span>
-            <span class="aui-connect-list-item-title">Primary text that is really really really really really really long</span>
-            <ul class="aui-connect-list-item-attributes">
-               <li>Secondary text</li>
-               <li>2016-10-20 02:30 PM</li>
-            </ul>
-         </li>
-         <li class="aui-connect-list-item">
-            <div class="aui-connect-list-item-actions">
-               <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-1"
-                     aria-haspopup="true" id="list-item-1-action-menu" data-no-focus="true">
-                  <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
-               </button>
-               <div id="list-item-1" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
-                  <ul class="aui-list-truncate">
-                     <li><a href="#">Menu item 1</a></li>
-                     <li><a href="#">Menu item 2</a></li>
-                  </ul>
+         {{#each retroNotes}}
+            <li class="aui-connect-list-item">
+               <div class="aui-connect-list-item-actions">
+                  <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-1"
+                        aria-haspopup="true" id="list-item-1-action-menu" data-no-focus="true">
+                     <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
+                  </button>
+                  <div id="list-item-1" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
+                     <ul class="aui-list-truncate">
+                        <li><a href="#">Menu item 1</a></li>
+                        <li><a href="#">Menu item 2</a></li>
+                     </ul>
+                  </div>
                </div>
-            </div>
-            <span class="aui-avatar aui-avatar-xsmall">
-               <span class="aui-avatar-inner">
-                  <img style="background-color: #ccc;">
-               </span>
-            </span>
-            <span class="aui-connect-list-item-title">A list item with an action menu</span>
-            <ul class="aui-connect-list-item-attributes">
-               <li>Secondary text</li>
-               <li>2016-10-20 02:30 PM</li>
-            </ul>
-         </li>
-         <li class="aui-connect-list-item">
-            <span class="aui-avatar aui-avatar-medium">
-               <span class="aui-avatar-inner">
-                  <img style="background-color: #ccc;">
-               </span>
-            </span>
-            <span class="aui-connect-list-item-title">Primary text with a larger avatar</span>
-            <ul class="aui-connect-list-item-attributes">
-               <li>Secondary text</li>
-               <li>2016-10-20 02:30 PM</li>
-            </ul>
-            <div class="aui-connect-list-item-description">
-               List view descriptions are optional. They can extend to three lines long.
-            </div>
-         </li>
-         <li class="aui-connect-list-item">
-            <span class="aui-connect-list-item-title">Primary text with no avatar</span>
-            <ul class="aui-connect-list-item-attributes">
-               <li>Secondary text</li>
-               <li>2016-10-20 02:30 PM</li>
-            </ul>
-         </li>
+               <span class="aui-connect-list-item-title">{{messageText}}</span>
+               <ul class="aui-connect-list-item-attributes">
+                  <li>Secondary text</li>
+                  <li>2016-10-20 02:30 PM</li>
+               </ul>
+            </li>
+         {{/each}}
       </ol>
    </section>
 </section>

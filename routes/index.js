@@ -103,9 +103,19 @@ module.exports = function (app, addon) {
   app.get('/sidebar',
     addon.authenticate(),
     function (req, res) {
-      res.render('sidebar', {
-        identity: req.identity
-      });
+      // TODO: refactor how we set and get the retro notes. key is currently hardcoded here.
+      // We ultimately want the key to  be the client and room id, and the value to be an
+      // array of all the retro notes
+      var key = "3867522:a52f6db9-a9c0-4c6b-bbc8-2d0299f11fd5"
+
+      addon.settings.get(key, req.clientInfo.clientKey).then(function (data) {
+        var jsonData = JSON.parse(data);
+
+         res.render('sidebar', {
+           retroNotes: [jsonData],
+           identity: req.identity
+         });
+       });
     }
     );
 
@@ -147,7 +157,6 @@ module.exports = function (app, addon) {
   app.post('/webhook',
     addon.authenticate(),
     function (req, res) {
-      
       var clientKey = req.clientInfo.clientKey;
       var roomId = req.context.room_id;
       var messageId = req.body.item.message.id;
@@ -155,7 +164,7 @@ module.exports = function (app, addon) {
 
       var data = JSON.stringify({
         clientKey: clientKey,
-        roomId: roomId, 
+        roomId: roomId,
         authorId: req.body.item.message.from.id,
         messageId: messageId,
         messageText: req.body.item.message.message
