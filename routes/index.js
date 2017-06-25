@@ -147,17 +147,27 @@ module.exports = function (app, addon) {
   app.post('/webhook',
     addon.authenticate(),
     function (req, res) {
+      
       var clientKey = req.clientInfo.clientKey;
       var roomId = req.context.room_id;
       var messageId = req.body.item.message.id;
-      var messageText = req.body.item.message.message;
-      var key = roomId + '_' + messageId;
+      var key = roomId + ":" + messageId;
 
-      addon.settings.set(key, messageText, clientKey);
+      var data = JSON.stringify({
+        clientKey: clientKey,
+        roomId: roomId, 
+        authorId: req.body.item.message.from.id,
+        messageId: messageId,
+        messageText: req.body.item.message.message
+      });
 
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note added (thumbsup)')
+      console.log(data);
+
+      addon.settings.set(key, data, clientKey);
+
+      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note added')
         .then(function (data) {
-          res.sendStatus(200);
+          res.sendStatus(201);
         });
     }
     );
