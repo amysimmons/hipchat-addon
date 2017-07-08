@@ -103,16 +103,13 @@ module.exports = function (app, addon) {
   app.get('/sidebar',
     addon.authenticate(),
     function (req, res) {
-      // TODO: refactor how we set and get the retro notes. key is currently hardcoded here.
-      // We ultimately want the key to  be the client and room id, and the value to be an
-      // array of all the retro notes
-      var key = "3867522:a52f6db9-a9c0-4c6b-bbc8-2d0299f11fd5"
+      var key = req.context.room_id;
 
       addon.settings.get(key, req.clientInfo.clientKey).then(function (data) {
-        var jsonData = JSON.parse(data);
+        var deserializedData = JSON.parse(data);
 
          res.render('sidebar', {
-           retroNotes: [jsonData],
+           retroNotes: deserializedData,
            identity: req.identity
          });
        });
@@ -159,26 +156,50 @@ module.exports = function (app, addon) {
     function (req, res) {
       var clientKey = req.clientInfo.clientKey;
       var roomId = req.context.room_id;
-      var messageId = req.body.item.message.id;
-      var key = roomId + ":" + messageId;
+      var messageText = req.body.item.message.message.split('/retro')[1].trim();
 
-      var data = JSON.stringify({
-        clientKey: clientKey,
-        roomId: roomId,
-        authorId: req.body.item.message.from.id,
-        messageId: messageId,
-        messageText: req.body.item.message.message
-      });
+      //if there is no retro note text, don't bother saving it
+      if(!messageText.length) {
+        hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Oops, you forgot to type a retro note')
+          .then(function (data) {
+            res.sendStatus(201);
+          });
+        return;
+      }
 
-      console.log(data);
+      var data = {
+        messageAuthorId: req.body.item.message.from.id,
+        messageAuthorName: req.body.item.message.from.name,
+        messageAuthorMentionName: req.body.item.message.from.mention_name,
+        messageId: req.body.item.message.id,
+        messageText: messageText,
+        messageDate: req.body.item.message.date
+      };
 
-      addon.settings.set(key, data, clientKey);
+      //get the existing retro notes for the room
+      addon.settings.get(roomId, clientKey).then(function (retroNotes) {
+        if (!retroNotes) { //if there are no current retro notes, create the first one
+          var firstNote = JSON.stringify([data]);
 
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note added')
-        .then(function (data) {
-          res.sendStatus(201);
-        });
-    }
+          addon.settings.set(roomId, firstNote, clientKey);
+        } else { //otherwise, add to the existing retro notes
+          var existingRetroNotes = JSON.parse(retroNotes);
+          var updatedRetroNotes = existingRetroNotes.map(function(note){
+            return note;
+          });
+          updatedRetroNotes.push(data);
+
+          var json = JSON.stringify(updatedRetroNotes)
+          addon.settings.set(roomId, json, clientKey);
+        }
+
+        hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note added')
+          .then(function (data) {
+            res.sendStatus(201);
+          });
+
+       });
+      }
     );
 
   // Notify the room that the add-on was installed. To learn more about
