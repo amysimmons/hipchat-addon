@@ -81,6 +81,34 @@
             "height": "200px"
           }
         }
+      },
+      {
+        "key": "clear.dialog",
+        "title": {
+          "value": "Clear all"
+        },
+        "url": "{{localBaseUrl}}/clear",
+        "options": {
+          "style": "normal",
+          "primaryAction": {
+            "name": {
+              "value": "Yes"
+            },
+            "key": "clear.yes",
+            "enabled": true
+          },
+          "secondaryActions": [{
+            "name": {
+              "value": "Cancel"
+            },
+            "key": "clear.cancel",
+            "enabled": true
+          }],
+          "size": {
+            "width": "400px",
+            "height": "200px"
+          }
+        }
       }
     ],
     "action": [

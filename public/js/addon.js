@@ -50,6 +50,30 @@ $(document).ready(function () {
     });
   }
 
+  function clearAll(callback) {
+    //Ask HipChat for a JWT token
+    HipChat.auth.withToken(function (err, token) {
+      if (!err) {
+        //Then, make an AJAX call to the add-on backend, including the JWT token
+        //Server-side, the JWT token is validated using the middleware function addon.authenticate()
+        $.ajax(
+            {
+              type: 'POST',
+              url: '/clear_all',
+              headers: {'Authorization': 'JWT ' + token},
+              dataType: 'json',
+              success: function () {
+                callback(false);
+              },
+              error: function () {
+                callback(true);
+              }
+            });
+      }
+    });
+  }
+
+
   /* Functions used by sidebar.hbs */
 
   $('#say_hello').on('click', function () {
@@ -96,6 +120,20 @@ $(document).ready(function () {
   //Register a listener for the dialog button - primary action "say Hello"
   HipChat.register({
     "dialog-button-click": function (event, closeDialog) {
+
+      if (event.action === "clear.yes") {
+        clearAll(function (error) {
+          if (!error)
+            closeDialog(true);
+          else
+            console.log('Could not send message');
+        });
+      }
+
+      if (event.action === "clear.cancel") {
+        closeDialog(true);
+      }
+
       if (event.action === "sample.dialog.action") {
         //If the user clicked on the primary dialog action declared in the atlassian-connect.json descriptor:
         sayHello(function (error) {

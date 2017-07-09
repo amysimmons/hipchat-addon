@@ -5,29 +5,35 @@
 
 <section class="aui-connect-page" role="main">
    <section class="aui-connect-content with-list">
-      <ol class="aui-connect-list">
-         {{#each retroNotes}}
-            <li class="aui-connect-list-item">
-               <div class="aui-connect-list-item-actions">
-                  <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-1"
-                        aria-haspopup="true" id="list-item-1-action-menu" data-no-focus="true">
-                     <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
-                  </button>
-                  <div id="list-item-1" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
-                     <ul class="aui-list-truncate">
-                        <li><a href="#">Menu item 1</a></li>
-                        <li><a href="#">Menu item 2</a></li>
-                     </ul>
+      {{#if retroNotes}}
+         <ol class="aui-connect-list">
+            {{#each retroNotes}}
+               <li class="aui-connect-list-item">
+                  <div class="aui-connect-list-item-actions">
+                     <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-1"
+                           aria-haspopup="true" id="list-item-1-action-menu" data-no-focus="true">
+                        <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
+                     </button>
+                     <div id="list-item-1" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
+                        <ul class="aui-list-truncate">
+                           <li><a href="#">Menu item 1</a></li>
+                           <li><a href="#">Menu item 2</a></li>
+                        </ul>
+                     </div>
                   </div>
-               </div>
-               <span class="aui-connect-list-item-title">{{messageText}}</span>
-               <ul class="aui-connect-list-item-attributes">
-                  <li>{{messageAuthorName}}</li>
-                  <li>{{messageDate}}</li>
-               </ul>
-            </li>
-         {{/each}}
-      </ol>
+                  <span class="aui-connect-list-item-title">{{messageText}}</span>
+                  <ul class="aui-connect-list-item-attributes">
+                     <li>{{messageAuthorName}}</li>
+                     <li>{{messageDate}}</li>
+                  </ul>
+               </li>
+            {{/each}}
+         </ol>
+         <button class="aui-button aui-button-link" onclick="HipChat.dialog.open({key: 'clear.dialog'})">Clear all</button>
+      {{else}}
+         <p>To add a Retro Note, type /retro followed by the note.</p>
+         <p>For example, /retro Our new hire Amy rocks!</p>
+      {{/if}}
    </section>
 </section>
 

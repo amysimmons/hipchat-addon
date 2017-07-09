@@ -127,6 +127,16 @@ module.exports = function (app, addon) {
     }
     );
 
+  //opens the clear all confirmation step dialog
+  app.get('/clear',
+    addon.authenticate(),
+    function (req, res) {
+      res.render('clear-all', {
+        identity: req.identity
+      });
+    }
+    );
+
   // Sample endpoint to send a card notification back into the chat room
   // See https://developer.atlassian.com/hipchat/guide/sending-messages
   app.post('/send_notification',
@@ -148,6 +158,20 @@ module.exports = function (app, addon) {
       res.json({ status: "ok" });
     }
     );
+
+
+  app.post('/clear_all',
+    addon.authenticate(),
+    function (req, res) {
+      var data = JSON.stringify([]);
+      addon.settings.set(req.identity.roomId, data, req.clientInfo.clientKey);
+
+      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro Notes successfully deleted')
+        .then(function (data) {
+          res.sendStatus(201);
+        });
+    }
+  );
 
   // This is an example route to handle an incoming webhook
   // https://developer.atlassian.com/hipchat/guide/webhooks
