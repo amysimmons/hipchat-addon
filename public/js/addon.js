@@ -154,9 +154,7 @@ $(document).ready(function () {
       }
 
       if (event.action === "delete.yes") {
-        
-        
-        deleteNote(id, function (error) {
+        deleteNote(function (error) {
           if (!error)
             closeDialog(true);
           else
@@ -176,6 +174,11 @@ $(document).ready(function () {
         //Otherwise, close the dialog
         closeDialog(true);
       }
+    },
+
+    "receive-parameters": function (parameters){
+      debugger
+      $(".js-delete-note-id").attr("data-id", parameters.id)
     }
   });
 

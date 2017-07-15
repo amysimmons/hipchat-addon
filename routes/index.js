@@ -142,11 +142,10 @@ module.exports = function (app, addon) {
     addon.authenticate(),
     function (req, res) {
       res.render('delete', {
-        identity: req.identity
+        identity: req.identity,
       });
     }
   );
-
 
   // Sample endpoint to send a card notification back into the chat room
   // See https://developer.atlassian.com/hipchat/guide/sending-messages
