@@ -16,8 +16,10 @@
                      </button>
                      <div id="list-item-1" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
                         <ul class="aui-list-truncate">
-                           <li><a href="#">Menu item 1</a></li>
-                           <li><a href="#">Menu item 2</a></li>
+                           <li><a href="#">Edit</a></li>
+                           <li onclick="HipChat.dialog.open({
+                             key: 'delete.dialog'
+                           })"><a href="#">Delete</a></li>
                         </ul>
                      </div>
                   </div>
@@ -29,7 +31,7 @@
                </li>
             {{/each}}
          </ol>
-         <button class="aui-button aui-button-link" onclick="HipChat.dialog.open({key: 'clear.dialog'})">Clear all</button>
+         <button class="aui-button aui-button-link" onclick="HipChat.dialog.open({key: 'delete-all.dialog'})">Delete all</button>
       {{else}}
          <p>To add a Retro Note, type /retro followed by the note.</p>
          <p>For example, /retro Our new hire Amy rocks!</p>

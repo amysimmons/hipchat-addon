@@ -50,7 +50,7 @@ $(document).ready(function () {
     });
   }
 
-  function clearAll(callback) {
+  function deleteNotes(callback) {
     //Ask HipChat for a JWT token
     HipChat.auth.withToken(function (err, token) {
       if (!err) {
@@ -58,8 +58,31 @@ $(document).ready(function () {
         //Server-side, the JWT token is validated using the middleware function addon.authenticate()
         $.ajax(
             {
-              type: 'POST',
-              url: '/clear_all',
+              type: 'DELETE',
+              url: '/notes/',
+              headers: {'Authorization': 'JWT ' + token},
+              dataType: 'json',
+              success: function () {
+                callback(false);
+              },
+              error: function () {
+                callback(true);
+              }
+            });
+      }
+    });
+  }
+
+  function deleteNote(callback) {
+    //Ask HipChat for a JWT token
+    HipChat.auth.withToken(function (err, token) {
+      if (!err) {
+        //Then, make an AJAX call to the add-on backend, including the JWT token
+        //Server-side, the JWT token is validated using the middleware function addon.authenticate()
+        $.ajax(
+            {
+              type: 'DELETE',
+              url: '/notes/{id}',
               headers: {'Authorization': 'JWT ' + token},
               dataType: 'json',
               success: function () {
@@ -121,8 +144,8 @@ $(document).ready(function () {
   HipChat.register({
     "dialog-button-click": function (event, closeDialog) {
 
-      if (event.action === "clear.yes") {
-        clearAll(function (error) {
+      if (event.action === "delete-all.yes") {
+        deleteNotes(function (error) {
           if (!error)
             closeDialog(true);
           else
@@ -130,8 +153,15 @@ $(document).ready(function () {
         });
       }
 
-      if (event.action === "clear.cancel") {
-        closeDialog(true);
+      if (event.action === "delete.yes") {
+        
+        
+        deleteNote(id, function (error) {
+          if (!error)
+            closeDialog(true);
+          else
+            console.log('Could not send message');
+        });
       }
 
       if (event.action === "sample.dialog.action") {

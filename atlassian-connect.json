@@ -83,25 +83,53 @@
         }
       },
       {
-        "key": "clear.dialog",
+        "key": "delete-all.dialog",
         "title": {
-          "value": "Clear all"
+          "value": "Delete all"
         },
-        "url": "{{localBaseUrl}}/clear",
+        "url": "{{localBaseUrl}}/dialog/delete-all",
         "options": {
           "style": "normal",
           "primaryAction": {
             "name": {
               "value": "Yes"
             },
-            "key": "clear.yes",
+            "key": "delete-all.yes",
             "enabled": true
           },
           "secondaryActions": [{
             "name": {
               "value": "Cancel"
             },
-            "key": "clear.cancel",
+            "key": "delete-all.cancel",
+            "enabled": true
+          }],
+          "size": {
+            "width": "400px",
+            "height": "200px"
+          }
+        }
+      },
+      {
+        "key": "delete.dialog",
+        "title": {
+          "value": "Delete"
+        },
+        "url": "{{localBaseUrl}}/dialog/delete",
+        "options": {
+          "style": "normal",
+          "primaryAction": {
+            "name": {
+              "value": "Yes"
+            },
+            "key": "delete.yes",
+            "enabled": true
+          },
+          "secondaryActions": [{
+            "name": {
+              "value": "Cancel"
+            },
+            "key": "delete.cancel",
             "enabled": true
           }],
           "size": {
