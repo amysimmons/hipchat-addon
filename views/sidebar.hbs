@@ -10,11 +10,11 @@
             {{#each retroNotes}}
                <li class="aui-connect-list-item">
                   <div class="aui-connect-list-item-actions">
-                     <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-1"
-                           aria-haspopup="true" id="list-item-1-action-menu" data-no-focus="true">
+                     <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-{{@index}}"
+                           aria-haspopup="true" id="list-item-{{@index}}-action-menu" data-no-focus="true">
                         <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
                      </button>
-                     <div id="list-item-1" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
+                     <div id="list-item-{{@index}}" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
                         <ul class="aui-list-truncate">
                            <li><a href="#">Edit</a></li>
                            <li onclick="HipChat.dialog.open({
@@ -30,8 +30,10 @@
                   </ul>
                </li>
             {{/each}}
+            <li class="aui-connect-list-item">
+               <button class="aui-button aui-button-link" onclick="HipChat.dialog.open({key: 'delete-all.dialog'})">Delete all</button>
+            </li>
          </ol>
-         <button class="aui-button aui-button-link" onclick="HipChat.dialog.open({key: 'delete-all.dialog'})">Delete all</button>
       {{else}}
          <p>To add a Retro Note, type /retro followed by the note.</p>
          <p>For example, /retro Our new hire Amy rocks!</p>

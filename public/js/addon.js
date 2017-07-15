@@ -177,7 +177,6 @@ $(document).ready(function () {
     },
 
     "receive-parameters": function (parameters){
-      debugger
       $(".js-delete-note-id").attr("data-id", parameters.id)
     }
   });
