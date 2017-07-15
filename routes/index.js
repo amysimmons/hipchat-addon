@@ -2,6 +2,7 @@ var http = require('request');
 var cors = require('cors');
 var uuid = require('uuid');
 var url = require('url');
+var moment = require('moment');
 
 // This is the heart of your HipChat Connect add-on. For more information,
 // take a look at https://developer.atlassian.com/hipchat/tutorials/getting-started-with-atlassian-connect-express-node-js
@@ -197,7 +198,7 @@ module.exports = function (app, addon) {
         messageAuthorMentionName: req.body.item.message.from.mention_name,
         messageId: req.body.item.message.id,
         messageText: messageText,
-        messageDate: req.body.item.message.date
+        messageDate: moment(req.body.item.message.date).format('D MMMM YYYY h:mma')
       };
 
       //get the existing retro notes for the room
