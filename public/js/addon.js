@@ -73,7 +73,7 @@ $(document).ready(function () {
     });
   }
 
-  function deleteNote(callback) {
+  function deleteNote(noteId, callback) {
     //Ask HipChat for a JWT token
     HipChat.auth.withToken(function (err, token) {
       if (!err) {
@@ -82,7 +82,7 @@ $(document).ready(function () {
         $.ajax(
             {
               type: 'DELETE',
-              url: '/notes/{id}',
+              url: '/notes/' + noteId,
               headers: {'Authorization': 'JWT ' + token},
               dataType: 'json',
               success: function () {
@@ -154,12 +154,16 @@ $(document).ready(function () {
       }
 
       if (event.action === "delete.yes") {
-        deleteNote(function (error) {
-          if (!error)
-            closeDialog(true);
-          else
-            console.log('Could not send message');
-        });
+        var noteId = $('.js-delete-note-id').attr('data-id');
+        var callback = function(error) {
+            if (!error) {
+              closeDialog(true);
+            }else {
+              console.log('Could not send message');
+            };
+        };
+
+        deleteNote(noteId, callback)
       }
 
       if (event.action === "sample.dialog.action") {
