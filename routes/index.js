@@ -111,21 +111,17 @@ module.exports = function (app, addon) {
         var deserializedData = JSON
           .parse(data)
           .map(function(note){
-            if (note.messageAuthorId === userId) {
-              note.isNoteAuthor = true;
-              return note;
-            } else {
-              return note;
-            }
+            note.isNoteAuthor = note.messageAuthorId === userId;
+            return note;
           });
 
          res.render('sidebar', {
-           retroNotes: deserializedData,
-           identity: req.identity
+            retroNotes: deserializedData,
+            identity: req.identity
          });
-       });
-      }
-    );
+      });
+    }
+  );
 
   // This is an example dialog controller that can be launched when clicking on the glance.
   // https://developer.atlassian.com/hipchat/guide/dialog
@@ -202,21 +198,26 @@ module.exports = function (app, addon) {
       addon.settings.get(roomId, clientKey).then(function (retroNotes) {
         if (!retroNotes) { //if there are no current retro notes, do nothing
           return
-        } else {
-          var existingRetroNotes = JSON.parse(retroNotes);
-
-          var filteredRetroNotes = existingRetroNotes.filter(function(note){
-            return note.messageId != req.params.id;
-          });
-
-          var json = JSON.stringify(filteredRetroNotes)
-          addon.settings.set(roomId, json, clientKey);
         }
 
-        hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note deleted')
-          .then(function (data) {
-            res.sendStatus(204);
+        var existingRetroNotes = JSON.parse(retroNotes);
+        var filteredRetroNotes = existingRetroNotes.filter(function(note){
+        // keep the note when it is not the one being deleted,
+        // and when the note author is not the request author
+            if (!(note.messageId === req.params.id && note.messageAuthorId === req.identity.userId)) {
+                return note;
+            }
         });
+
+        if (filteredRetroNotes.length < existingRetroNotes.length) {
+            var json = JSON.stringify(filteredRetroNotes)
+            addon.settings.set(roomId, json, clientKey);
+
+            hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note deleted')
+            .then(function (data) {
+                res.sendStatus(204);
+            });
+        }
       });
     }
   );
