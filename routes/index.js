@@ -105,16 +105,26 @@ module.exports = function (app, addon) {
     addon.authenticate(),
     function (req, res) {
       var key = req.context.room_id;
+      var userId = req.identity.userId;
 
       addon.settings.get(key, req.clientInfo.clientKey).then(function (data) {
-        var deserializedData = JSON.parse(data);
+        var deserializedData = JSON
+          .parse(data)
+          .map(function(note){
+            if (note.messageAuthorId === userId) {
+              note.isNoteAuthor = true;
+              return note;
+            } else {
+              return note;
+            }
+          });
 
          res.render('sidebar', {
            retroNotes: deserializedData,
            identity: req.identity
          });
        });
-    }
+      }
     );
 
   // This is an example dialog controller that can be launched when clicking on the glance.
@@ -188,7 +198,7 @@ module.exports = function (app, addon) {
     function (req, res) {
       var clientKey = req.clientInfo.clientKey;
       var roomId = req.context.room_id;
-      
+
       addon.settings.get(roomId, clientKey).then(function (retroNotes) {
         if (!retroNotes) { //if there are no current retro notes, do nothing
           return

@@ -9,6 +9,7 @@
          <ol class="aui-connect-list">
             {{#each retroNotes}}
                <li class="aui-connect-list-item">
+                  {{#isNoteAuthor}}
                   <div class="aui-connect-list-item-actions">
                      <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-{{@index}}"
                            aria-haspopup="true" id="list-item-{{@index}}-action-menu" data-no-focus="true">
@@ -23,6 +24,7 @@
                         </ul>
                      </div>
                   </div>
+                  {{/isNoteAuthor}}
                   <span class="aui-connect-list-item-title">{{messageText}}</span>
                   <ul class="aui-connect-list-item-attributes">
                      <li>{{messageAuthorName}}</li>
