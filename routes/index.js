@@ -153,6 +153,15 @@ module.exports = function (app, addon) {
     }
   );
 
+  app.get('/dialog/edit',
+    addon.authenticate(),
+    function (req, res) {
+      res.render('edit', {
+        identity: req.identity,
+      });
+    }
+  );
+
   // Sample endpoint to send a card notification back into the chat room
   // See https://developer.atlassian.com/hipchat/guide/sending-messages
   app.post('/send_notification',
@@ -221,6 +230,39 @@ module.exports = function (app, addon) {
       });
     }
   );
+
+    app.put('/notes/:id',
+      addon.authenticate(),
+      function (req, res) {
+        var clientKey = req.clientInfo.clientKey;
+        var roomId = req.context.room_id;
+
+        addon.settings.get(roomId, clientKey).then(function (retroNotes) {
+          if (!retroNotes) { //if there are no current retro notes, do nothing
+            return
+          }
+
+          var existingRetroNotes = JSON.parse(retroNotes);
+
+            var updatedRetroNotes = existingRetroNotes.map(function(note){
+                if (note.messageId === req.params.id && note.messageAuthorId === req.identity.userId) {
+                    note.messageText = req.body.messageText
+                    return note;
+                } else {
+                    return note;
+                }
+            })
+
+          var json = JSON.stringify(updatedRetroNotes)
+          addon.settings.set(roomId, json, clientKey);
+
+          hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro note edited')
+          .then(function (data) {
+              res.sendStatus(204);
+          });
+        });
+      }
+    );
 
   // This is an example route to handle an incoming webhook
   // https://developer.atlassian.com/hipchat/guide/webhooks

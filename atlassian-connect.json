@@ -137,6 +137,34 @@
             "height": "200px"
           }
         }
+      },
+      {
+        "key": "edit.dialog",
+        "title": {
+          "value": "Edit"
+        },
+        "url": "{{localBaseUrl}}/dialog/edit",
+        "options": {
+          "style": "normal",
+          "primaryAction": {
+            "name": {
+              "value": "Save"
+            },
+            "key": "edit.save",
+            "enabled": true
+          },
+          "secondaryActions": [{
+            "name": {
+              "value": "Cancel"
+            },
+            "key": "edit.cancel",
+            "enabled": true
+          }],
+          "size": {
+            "width": "400px",
+            "height": "200px"
+          }
+        }
       }
     ],
     "action": [

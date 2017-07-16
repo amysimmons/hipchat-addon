@@ -17,9 +17,18 @@
                      </button>
                      <div id="list-item-{{@index}}" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
                         <ul class="aui-list-truncate">
-                           <li><a href="#">Edit</a></li>
                            <li onclick="HipChat.dialog.open({
-                             key: 'delete.dialog', parameters:{id:'{{messageId}}'}
+                             key: 'edit.dialog', parameters:{
+                                 dialog: 'edit',
+                                 id:'{{messageId}}',
+                                 messageText:'{{messageText}}'
+                              }
+                           })"><a href="#">Edit</a></li>
+                           <li onclick="HipChat.dialog.open({
+                             key: 'delete.dialog', parameters:{
+                                 dialog: 'delete',
+                                 id:'{{messageId}}'
+                              }
                            })"><a href="#">Delete</a></li>
                         </ul>
                      </div>

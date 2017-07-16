@@ -96,6 +96,29 @@ $(document).ready(function () {
     });
   }
 
+  function editNote(noteId, messageText, callback) {
+    HipChat.auth.withToken(function (err, token) {
+      if (!err) {
+        //Then, make an AJAX call to the add-on backend, including the JWT token
+        //Server-side, the JWT token is validated using the middleware function addon.authenticate()
+        $.ajax(
+            {
+              type: 'PUT',
+              url: '/notes/' + noteId,
+              headers: {'Authorization': 'JWT ' + token},
+              dataType: 'json',
+              data: {messageText: messageText},
+              success: function () {
+                callback(false);
+              },
+              error: function () {
+                callback(true);
+              }
+            });
+      }
+    });
+
+  };
 
   /* Functions used by sidebar.hbs */
 
@@ -166,6 +189,21 @@ $(document).ready(function () {
         deleteNote(noteId, callback)
       }
 
+      if (event.action === "edit.save") {
+        var newMessageText = $('.js-edit-note-input').val();
+        var noteId = $('.js-edit-note-input').attr('data-id');
+
+        var callback = function(error) {
+            if (!error) {
+              closeDialog(true);
+            }else {
+              console.log('Could not send message');
+            };
+        };
+
+        editNote(noteId, newMessageText, callback)
+      };
+
       if (event.action === "sample.dialog.action") {
         //If the user clicked on the primary dialog action declared in the atlassian-connect.json descriptor:
         sayHello(function (error) {
@@ -180,8 +218,16 @@ $(document).ready(function () {
       }
     },
 
-    "receive-parameters": function (parameters){
-      $(".js-delete-note-id").attr("data-id", parameters.id)
+    "receive-parameters": function (parameters = {}){
+      switch(parameters.dialog) {
+        case 'edit':
+          $('.js-edit-note-input').val(parameters.messageText);
+          $(".js-edit-note-input").attr("data-id", parameters.id)
+          break;
+        case 'delete':
+          $(".js-delete-note-id").attr("data-id", parameters.id)
+          break;
+      }
     }
   });
 
