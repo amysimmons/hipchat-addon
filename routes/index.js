@@ -64,13 +64,6 @@ module.exports = function (app, addon) {
           "type": "html",
           "value": "RetroNotes"
         }
-        // "status": {
-        //   "type": "lozenge",
-        //   "value": {
-        //     "label": "NEW",
-        //     "type": "error"
-        //   }
-        // }
       });
     }
     );
@@ -126,17 +119,6 @@ module.exports = function (app, addon) {
     }
   );
 
-  // This is an example dialog controller that can be launched when clicking on the glance.
-  // https://developer.atlassian.com/hipchat/guide/dialog
-  // app.get('/dialog',
-  //   addon.authenticate(),
-  //   function (req, res) {
-  //     res.render('dialog', {
-  //       identity: req.identity
-  //     });
-  //   }
-  // );
-
   //opens the clear all confirmation step dialog
   app.get('/dialog/delete-all',
     addon.authenticate(),
@@ -165,39 +147,19 @@ module.exports = function (app, addon) {
     }
   );
 
-  // Sample endpoint to send a card notification back into the chat room
-  // See https://developer.atlassian.com/hipchat/guide/sending-messages
-  // app.post('/send_notification',
-  //   addon.authenticate(),
-  //   function (req, res) {
-  //     var card = {
-  //       "style": "link",
-  //       "url": "https://www.hipchat.com",
-  //       "id": uuid.v4(),
-  //       "title": req.body.messageTitle,
-  //       "description": "Great teams use HipChat: Group and private chat, file sharing, and integrations",
-  //       "icon": {
-  //         "url": "https://hipchat-public-m5.atlassian.com/assets/img/hipchat/bookmark-icons/favicon-192x192.png"
-  //       }
-  //     };
-  //     var msg = '<b>' + card.title + '</b>: ' + card.description;
-  //     var opts = { 'options': { 'color': 'yellow' } };
-  //     hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
-  //     res.json({ status: "ok" });
-  //   }
-  //   );
-
-
   app.delete('/notes',
     addon.authenticate(),
     function (req, res) {
       var data = JSON.stringify([]);
-      addon.settings.set(req.identity.roomId, data, req.clientInfo.clientKey);
+      addon.settings.set(req.identity.roomId, data, req.clientInfo.clientKey).then(function(x, y) {
+        console.log('X AND Y', x, y)
 
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro notes successfully deleted')
-        .then(function (data) {
-          res.sendStatus(200);
-        });
+        hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro notes successfully deleted')
+          .then(function (data) {
+            res.sendStatus(200);
+          });
+
+      });
     }
   );
 

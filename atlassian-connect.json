@@ -61,27 +61,6 @@
       }
     ],
     "dialog": [
-      // {
-      //   "key": "sample.dialog",
-      //   "title": {
-      //     "value": "Hello Dialog!"
-      //   },
-      //   "url": "{{localBaseUrl}}/dialog",
-      //   "options": {
-      //     "style": "normal",
-      //     "primaryAction": {
-      //       "name": {
-      //         "value": "Say Hello!"
-      //       },
-      //       "key": "sample.dialog.action",
-      //       "enabled": true
-      //     },
-      //     "size": {
-      //       "width": "400px",
-      //       "height": "200px"
-      //     }
-      //   }
-      // },
       {
         "key": "delete-all.dialog",
         "title": {
@@ -168,14 +147,6 @@
       }
     ],
     "action": [
-      // {
-      //   "key": "sample.action",
-      //   "name": {
-      //     "value": "Open Hello Dialog!"
-      //   },
-      //   "target": "sample.dialog",
-      //   "location": "hipchat.input.action"
-      // }
     ]
   }
 }

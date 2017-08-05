@@ -4,52 +4,55 @@
         <!-- It contains functions which execute actions for buttons/links in this page -->
 
 <section class="aui-connect-page" role="main">
-   <section class="aui-connect-content with-list">
       {{#if retroNotes}}
-         <ol class="aui-connect-list">
-            {{#each retroNotes}}
-               <li class="aui-connect-list-item">
-                  {{#isNoteAuthor}}
-                  <div class="aui-connect-list-item-actions">
-                     <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-{{@index}}"
-                           aria-haspopup="true" id="list-item-{{@index}}-action-menu" data-no-focus="true">
-                        <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
-                     </button>
-                     <div id="list-item-{{@index}}" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
-                        <ul class="aui-list-truncate">
-                           <li onclick="HipChat.dialog.open({
-                             key: 'edit.dialog', parameters:{
-                                 dialog: 'edit',
-                                 id:'{{messageId}}',
-                                 messageText:'{{messageText}}'
-                              }
-                           })"><a href="#">Edit</a></li>
-                           <li onclick="HipChat.dialog.open({
-                             key: 'delete.dialog', parameters:{
-                                 dialog: 'delete',
-                                 id:'{{messageId}}'
-                              }
-                           })"><a href="#">Delete</a></li>
-                        </ul>
+         <section class="aui-connect-content with-list">
+            <ol class="aui-connect-list">
+               {{#each retroNotes}}
+                  <li class="aui-connect-list-item">
+                     {{#isNoteAuthor}}
+                     <div class="aui-connect-list-item-actions">
+                        <button class="aui-dropdown2-trigger aui-button aui-dropdown2-trigger-arrowless" aria-owns="list-item-{{@index}}"
+                              aria-haspopup="true" id="list-item-{{@index}}-action-menu" data-no-focus="true">
+                           <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
+                        </button>
+                        <div id="list-item-{{@index}}" class="aui-style-default aui-dropdown2 aui-connect-list-item-action">
+                           <ul class="aui-list-truncate">
+                              <li onclick="HipChat.dialog.open({
+                                key: 'edit.dialog', parameters:{
+                                    dialog: 'edit',
+                                    id:'{{messageId}}',
+                                    messageText:'{{messageText}}'
+                                 }
+                              })"><a href="#">Edit</a></li>
+                              <li onclick="HipChat.dialog.open({
+                                key: 'delete.dialog', parameters:{
+                                    dialog: 'delete',
+                                    id:'{{messageId}}'
+                                 }
+                              })"><a href="#">Delete</a></li>
+                           </ul>
+                        </div>
                      </div>
-                  </div>
-                  {{/isNoteAuthor}}
-                  <span class="aui-connect-list-item-title">{{messageText}}</span>
-                  <ul class="aui-connect-list-item-attributes">
-                     <li>{{messageAuthorName}}</li>
-                     <li>{{messageDate}}</li>
-                  </ul>
+                     {{/isNoteAuthor}}
+                     <span class="aui-connect-list-item-title">{{messageText}}</span>
+                     <ul class="aui-connect-list-item-attributes">
+                        <li>{{messageAuthorName}}</li>
+                        <li>{{messageDate}}</li>
+                     </ul>
+                  </li>
+               {{/each}}
+               <li class="aui-connect-list-item">
+                  <button class="aui-button aui-button-link" onclick="HipChat.dialog.open({key: 'delete-all.dialog'})">Delete all</button>
                </li>
-            {{/each}}
-            <li class="aui-connect-list-item">
-               <button class="aui-button aui-button-link" onclick="HipChat.dialog.open({key: 'delete-all.dialog'})">Delete all</button>
-            </li>
-         </ol>
+            </ol>
+         </section>
       {{else}}
-         <p>To add a retro note, type /retro followed by the note.</p>
-         <p>For example, /retro Our new hire Amy rocks!</p>
+         <section class="aui-connect-content">
+            <p>There are no retro notes!</p>
+            <p>To add one, type /retro followed by the note.</p>
+            <p><code>/retro This new RetroNotes integration is making life *so* much easier.</code></p>
+         </section>
       {{/if}}
-   </section>
 </section>
 
 <script src="/js/sidebar-page-switcher.js"></script>
