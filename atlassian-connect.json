@@ -1,7 +1,7 @@
 {
   "key": "my-add-on",
-  "name": "Retro Notes",
-  "description": "Thanks for installing Retro Notes! Type /retro in your room to get started.",
+  "name": "RetroNotes",
+  "description": "Thanks for installing RetroNotes! Type /retro in your room to get started.",
   "vendor": {
     "name": "Amy Simmons and Tom Dane",
     "url": "https://www.hipchat.com"
@@ -39,7 +39,7 @@
     "glance": [
       {
         "name": {
-          "value": "Retro Notes"
+          "value": "RetroNotes"
         },
         "queryUrl": "{{localBaseUrl}}/glance",
         "key": "retro.glance",
@@ -54,7 +54,7 @@
       {
         "key": "retro.sidebar",
         "name": {
-          "value": "Retro Notes Sidebar"
+          "value": "RetroNotes Sidebar"
         },
         "location": "hipchat.sidebar.right",
         "url": "{{localBaseUrl}}/sidebar"

@@ -62,7 +62,7 @@ module.exports = function (app, addon) {
       res.json({
         "label": {
           "type": "html",
-          "value": "Retro Notes"
+          "value": "RetroNotes"
         }
         // "status": {
         //   "type": "lozenge",
@@ -108,12 +108,15 @@ module.exports = function (app, addon) {
       var userId = req.identity.userId;
 
       addon.settings.get(key, req.clientInfo.clientKey).then(function (data) {
-        var deserializedData = JSON
-          .parse(data)
-          .map(function(note){
-            note.isNoteAuthor = note.messageAuthorId === userId;
-            return note;
-          });
+
+        if (data) {
+          var deserializedData = JSON
+            .parse(data)
+            .map(function(note){
+              note.isNoteAuthor = note.messageAuthorId === userId;
+              return note;
+            });
+        }
 
          res.render('sidebar', {
             retroNotes: deserializedData,
@@ -191,7 +194,7 @@ module.exports = function (app, addon) {
       var data = JSON.stringify([]);
       addon.settings.set(req.identity.roomId, data, req.clientInfo.clientKey);
 
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro Notes successfully deleted')
+      hipchat.sendMessage(req.clientInfo, req.identity.roomId, 'Retro notes successfully deleted')
         .then(function (data) {
           res.sendStatus(200);
         });
