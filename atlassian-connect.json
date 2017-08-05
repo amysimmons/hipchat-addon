@@ -1,9 +1,9 @@
 {
   "key": "my-add-on",
-  "name": "Hello!",
-  "description": "My very first HipChat add-on",
+  "name": "Retro Notes",
+  "description": "Thanks for installing Retro Notes! Type /retro in your room to get started.",
   "vendor": {
-    "name": "Angry Nerds",
+    "name": "Amy Simmons and Tom Dane",
     "url": "https://www.hipchat.com"
   },
   "links": {
