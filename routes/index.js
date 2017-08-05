@@ -63,14 +63,14 @@ module.exports = function (app, addon) {
         "label": {
           "type": "html",
           "value": "Retro Notes"
-        },
-        "status": {
-          "type": "lozenge",
-          "value": {
-            "label": "NEW",
-            "type": "error"
-          }
         }
+        // "status": {
+        //   "type": "lozenge",
+        //   "value": {
+        //     "label": "NEW",
+        //     "type": "error"
+        //   }
+        // }
       });
     }
     );
@@ -125,14 +125,14 @@ module.exports = function (app, addon) {
 
   // This is an example dialog controller that can be launched when clicking on the glance.
   // https://developer.atlassian.com/hipchat/guide/dialog
-  app.get('/dialog',
-    addon.authenticate(),
-    function (req, res) {
-      res.render('dialog', {
-        identity: req.identity
-      });
-    }
-  );
+  // app.get('/dialog',
+  //   addon.authenticate(),
+  //   function (req, res) {
+  //     res.render('dialog', {
+  //       identity: req.identity
+  //     });
+  //   }
+  // );
 
   //opens the clear all confirmation step dialog
   app.get('/dialog/delete-all',
@@ -164,25 +164,25 @@ module.exports = function (app, addon) {
 
   // Sample endpoint to send a card notification back into the chat room
   // See https://developer.atlassian.com/hipchat/guide/sending-messages
-  app.post('/send_notification',
-    addon.authenticate(),
-    function (req, res) {
-      var card = {
-        "style": "link",
-        "url": "https://www.hipchat.com",
-        "id": uuid.v4(),
-        "title": req.body.messageTitle,
-        "description": "Great teams use HipChat: Group and private chat, file sharing, and integrations",
-        "icon": {
-          "url": "https://hipchat-public-m5.atlassian.com/assets/img/hipchat/bookmark-icons/favicon-192x192.png"
-        }
-      };
-      var msg = '<b>' + card.title + '</b>: ' + card.description;
-      var opts = { 'options': { 'color': 'yellow' } };
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
-      res.json({ status: "ok" });
-    }
-    );
+  // app.post('/send_notification',
+  //   addon.authenticate(),
+  //   function (req, res) {
+  //     var card = {
+  //       "style": "link",
+  //       "url": "https://www.hipchat.com",
+  //       "id": uuid.v4(),
+  //       "title": req.body.messageTitle,
+  //       "description": "Great teams use HipChat: Group and private chat, file sharing, and integrations",
+  //       "icon": {
+  //         "url": "https://hipchat-public-m5.atlassian.com/assets/img/hipchat/bookmark-icons/favicon-192x192.png"
+  //       }
+  //     };
+  //     var msg = '<b>' + card.title + '</b>: ' + card.description;
+  //     var opts = { 'options': { 'color': 'yellow' } };
+  //     hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
+  //     res.json({ status: "ok" });
+  //   }
+  //   );
 
 
   app.delete('/notes',
@@ -321,7 +321,7 @@ module.exports = function (app, addon) {
   // Connect's install flow, check out:
   // https://developer.atlassian.com/hipchat/guide/installation-flow
   addon.on('installed', function (clientKey, clientInfo, req) {
-    hipchat.sendMessage(clientInfo, req.body.roomId, 'The ' + addon.descriptor.name + ' add-on has been installed in this room');
+    hipchat.sendMessage(clientInfo, req.body.roomId, 'Thanks for installing ' + addon.descriptor.name + '. Type /retro to get started.');
   });
 
   // Clean up clients when uninstalled

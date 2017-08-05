@@ -39,11 +39,11 @@
     "glance": [
       {
         "name": {
-          "value": "Hello!"
+          "value": "Retro Notes"
         },
         "queryUrl": "{{localBaseUrl}}/glance",
-        "key": "sample.glance",
-        "target": "sample.sidebar",
+        "key": "retro.glance",
+        "target": "retro.sidebar",
         "icon": {
           "url": "{{localBaseUrl}}/img/logo.png",
           "url@2x": "{{localBaseUrl}}/img/logo.png"
@@ -52,36 +52,36 @@
     ],
     "webPanel": [
       {
-        "key": "sample.sidebar",
+        "key": "retro.sidebar",
         "name": {
-          "value": "Hello Sidebar!"
+          "value": "Retro Notes Sidebar"
         },
         "location": "hipchat.sidebar.right",
         "url": "{{localBaseUrl}}/sidebar"
       }
     ],
     "dialog": [
-      {
-        "key": "sample.dialog",
-        "title": {
-          "value": "Hello Dialog!"
-        },
-        "url": "{{localBaseUrl}}/dialog",
-        "options": {
-          "style": "normal",
-          "primaryAction": {
-            "name": {
-              "value": "Say Hello!"
-            },
-            "key": "sample.dialog.action",
-            "enabled": true
-          },
-          "size": {
-            "width": "400px",
-            "height": "200px"
-          }
-        }
-      },
+      // {
+      //   "key": "sample.dialog",
+      //   "title": {
+      //     "value": "Hello Dialog!"
+      //   },
+      //   "url": "{{localBaseUrl}}/dialog",
+      //   "options": {
+      //     "style": "normal",
+      //     "primaryAction": {
+      //       "name": {
+      //         "value": "Say Hello!"
+      //       },
+      //       "key": "sample.dialog.action",
+      //       "enabled": true
+      //     },
+      //     "size": {
+      //       "width": "400px",
+      //       "height": "200px"
+      //     }
+      //   }
+      // },
       {
         "key": "delete-all.dialog",
         "title": {
@@ -168,14 +168,14 @@
       }
     ],
     "action": [
-      {
-        "key": "sample.action",
-        "name": {
-          "value": "Open Hello Dialog!"
-        },
-        "target": "sample.dialog",
-        "location": "hipchat.input.action"
-      }
+      // {
+      //   "key": "sample.action",
+      //   "name": {
+      //     "value": "Open Hello Dialog!"
+      //   },
+      //   "target": "sample.dialog",
+      //   "location": "hipchat.input.action"
+      // }
     ]
   }
 }
